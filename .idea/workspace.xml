@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="061bc056-12cb-432a-be0c-c55aaa8508b9" name="Changes" comment="Game v1.1">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="061bc056-12cb-432a-be0c-c55aaa8508b9" name="Changes" comment="Game v1.2">
       <change beforePath="$PROJECT_DIR$/src/console/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/console/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +60,7 @@
       <option name="presentableId" value="Default" />
       <updated>1663919007346</updated>
       <workItem from="1663919009574" duration="15606000" />
-      <workItem from="1663949456870" duration="2523000" />
+      <workItem from="1663949456870" duration="3001000" />
     </task>
     <task id="LOCAL-00001" summary="Game v1.0">
       <created>1663941718357</created>
@@ -91,7 +90,21 @@
       <option name="project" value="LOCAL" />
       <updated>1663950445511</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Game v1.1">
+      <created>1663952237972</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1663952237972</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Game v1.2">
+      <created>1663952452914</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1663952452914</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,6 +124,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Game v1.0" />
     <MESSAGE value="Game v1.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game v1.1" />
+    <MESSAGE value="Game v1.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game v1.2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/console/Menu.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
