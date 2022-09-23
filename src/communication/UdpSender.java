@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 
 public class UdpSender {
     private final DatagramSocket sender;
-    private final String receiverIpStr;
-    private final int receiverPort;
+    private final String serverIpStr;
+    private final int serverPort;
 
-    public UdpSender(String receiverIpStr, int receiverPort) {
-        this.receiverIpStr = receiverIpStr;
-        this.receiverPort = receiverPort;
+    public UdpSender(String serverIpStr, int serverPort) {
+        this.serverIpStr = serverIpStr;
+        this.serverPort = serverPort;
         try {
             sender = new DatagramSocket();
         } catch (SocketException e) {
@@ -25,11 +25,10 @@ public class UdpSender {
     public void send(String msg) {
         try {
             byte[] data = msg.getBytes();
-            DatagramPacket dp =
+            DatagramPacket request =
                     new DatagramPacket(data, data.length,
-                            InetAddress.getByName(receiverIpStr), receiverPort);
-            // 3. отправить
-            sender.send(dp);
+                            InetAddress.getByName(serverIpStr), serverPort);
+            sender.send(request);
         } catch (Exception ex) {
             System.out.println("Something wrong: " + ex.getMessage());
         } finally {
@@ -51,6 +50,6 @@ public class UdpSender {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return new String(response.getData(), 0, response.getLength());
+        return new String(buffer, 0, response.getLength());
     }
 }
