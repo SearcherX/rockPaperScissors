@@ -50,7 +50,8 @@ public class Menu {
                     String opponent = receiver.receive();
                     System.out.println("Игрок " + opponent + "(" + receiver.getSenderIp() + ":" +
                             receiver.getSenderPort() + ") подключился");
-                    UdpSender sender = new UdpSender(receiver.getSenderIp(), receiver.getSenderPort());
+
+                    UdpSender sender = new UdpSender(receiver.getSenderIp(), PORT);
                     sender.send(nickname);
 //                    stop = selectFigure(in, choice1, opponent);
                 } else if (choice2 == 2) {
