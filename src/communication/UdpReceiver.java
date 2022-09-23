@@ -6,8 +6,10 @@ public class UdpReceiver {
     DatagramSocket receiver = null;
     String senderIp;
     int senderPort;
+    int port;
 
     public UdpReceiver(String ipStr, int port) {
+        this.port = port;
         try {
             receiver = new DatagramSocket(port, InetAddress.getByName(ipStr));
         } catch (Exception e) {
@@ -51,7 +53,7 @@ public class UdpReceiver {
             byte[] data = msg.getBytes();
             DatagramPacket dp =
                     new DatagramPacket(data, data.length,
-                            receiver.getInetAddress(), receiver.getPort());
+                            receiver.getInetAddress(), port);
             // 3. отправить
             receiver.send(dp);
         } catch (Exception ex) {
