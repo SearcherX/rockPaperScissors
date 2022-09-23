@@ -11,7 +11,8 @@ public class UdpReceiver {
     public UdpReceiver(String ipStr, int port) {
         this.port = port;
         try {
-            receiver = new DatagramSocket(port, InetAddress.getByName(ipStr));
+            //receiver = new DatagramSocket(port, InetAddress.getByName(ipStr));
+            receiver = new DatagramSocket(port);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
