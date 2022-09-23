@@ -4,7 +4,7 @@ import java.net.*;
 
 public class UdpReceiver {
     DatagramSocket receiver = null;
-    String senderIp;
+    InetAddress senderAddress;
     int senderPort;
     int port;
 
@@ -18,23 +18,15 @@ public class UdpReceiver {
         }
     }
 
-    public String getSenderIp() {
-        return senderIp;
-    }
-
-    public int getSenderPort() {
-        return senderPort;
-    }
-
     public String receive() {
         String msg = null;
         try {
             byte[] buffer = new byte[1024];
-            DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
-            receiver.receive(dp);
-            senderIp = dp.getAddress().getHostAddress();
-            senderPort = dp.getPort();
-            msg = new String(dp.getData(), 0, dp.getLength());
+            DatagramPacket request = new DatagramPacket(buffer, buffer.length);
+            receiver.receive(request);
+            senderAddress = request.getAddress();
+            senderPort = request.getPort();
+            msg = new String(request.getData(), 0, request.getLength());
         } catch (Exception ex) {
             System.out.println("Something wrong: " + ex.getMessage());
         } finally {
@@ -52,11 +44,11 @@ public class UdpReceiver {
     public void send(String msg) {
         try {
             byte[] data = msg.getBytes();
-            DatagramPacket dp =
+            DatagramPacket response =
                     new DatagramPacket(data, data.length,
-                            receiver.getInetAddress(), port);
+                            senderAddress, senderPort);
             // 3. отправить
-            receiver.send(dp);
+            receiver.send(response);
         } catch (Exception ex) {
             System.out.println("Something wrong: " + ex.getMessage());
         } finally {
