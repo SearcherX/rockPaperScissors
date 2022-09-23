@@ -18,6 +18,14 @@ public class UdpReceiver {
         }
     }
 
+    public InetAddress getSenderAddress() {
+        return senderAddress;
+    }
+
+    public int getSenderPort() {
+        return senderPort;
+    }
+
     public String receive() {
         String msg = null;
         try {

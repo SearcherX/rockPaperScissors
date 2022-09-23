@@ -49,7 +49,7 @@ public class Menu {
                     System.out.println("Ожидаем оппонента");
                     String opponent = receiver.receive();
 
-                    System.out.println("Игрок " + opponent + "(" + receiver.getSenderIp() + ":" +
+                    System.out.println("Игрок " + opponent + "(" + receiver.getSenderAddress().getHostAddress() + ":" +
                             receiver.getSenderPort() + ") подключился");
 
                     receiver.send(nickname);
