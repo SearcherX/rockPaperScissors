@@ -48,10 +48,11 @@ public class Menu {
                     UdpReceiver receiver = new UdpReceiver(IP, PORT);
                     System.out.println("Ожидаем оппонента");
                     String opponent = receiver.receive();
+                    int port = Integer.parseInt(receiver.receive());
                     System.out.println("Игрок " + opponent + "(" + receiver.getSenderIp() + ":" +
                             receiver.getSenderPort() + ") подключился");
 
-                    UdpSender sender = new UdpSender(receiver.getSenderIp(), PORT);
+                    UdpSender sender = new UdpSender(receiver.getSenderIp(), port);
                     sender.send(nickname);
 //                    stop = selectFigure(in, choice1, opponent);
                 } else if (choice2 == 2) {
@@ -63,6 +64,7 @@ public class Menu {
 
                     UdpSender sender = new UdpSender(ipStr, port);
                     sender.send(nickname);
+                    sender.send(Integer.toString(PORT));
                     UdpReceiver receiver = new UdpReceiver(IP, PORT);
                     String nicknameFromServer = receiver.receive();
                     System.out.println("Вы подлючились к " + nicknameFromServer + "(" + receiver.getSenderIp() + ":" +
