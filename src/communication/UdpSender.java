@@ -1,5 +1,6 @@
 package communication;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -40,5 +41,16 @@ public class UdpSender {
                 System.out.println("Something wrong in finally: " + ex.getMessage());
             }
         }
+    }
+
+    public String receive() {
+        byte[] buffer = new byte[512];
+        DatagramPacket response = new DatagramPacket(buffer, buffer.length);
+        try {
+            sender.receive(response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new String(buffer, 0, response.getLength());
     }
 }

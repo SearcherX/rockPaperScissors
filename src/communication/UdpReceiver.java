@@ -31,7 +31,7 @@ public class UdpReceiver {
             receiver.receive(dp);
             senderIp = dp.getAddress().getHostAddress();
             senderPort = dp.getPort();
-            return new String(dp.getData(), 0, dp.getLength());
+            msg = new String(dp.getData(), 0, dp.getLength());
         } catch (Exception ex) {
             System.out.println("Something wrong: " + ex.getMessage());
         } finally {
@@ -44,5 +44,26 @@ public class UdpReceiver {
             }
         }
         return msg;
+    }
+
+    public void send(String msg) {
+        try {
+            byte[] data = msg.getBytes();
+            DatagramPacket dp =
+                    new DatagramPacket(data, data.length,
+                            receiver.getInetAddress(), receiver.getPort());
+            // 3. отправить
+            receiver.send(dp);
+        } catch (Exception ex) {
+            System.out.println("Something wrong: " + ex.getMessage());
+        } finally {
+            try {
+                if (!receiver.isClosed()) {
+                    receiver.close();
+                }
+            } catch (Exception ex) {
+                System.out.println("Something wrong in finally: " + ex.getMessage());
+            }
+        }
     }
 }
