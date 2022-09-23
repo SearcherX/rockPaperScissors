@@ -48,7 +48,6 @@ public class Menu {
                     UdpReceiver receiver = new UdpReceiver(IP, PORT);
                     System.out.println("Ожидаем оппонента");
                     String opponent = receiver.receive();
-                    int port = Integer.parseInt(receiver.receive());
 
                     System.out.println("Игрок " + opponent + "(" + receiver.getSenderIp() + ":" +
                             receiver.getSenderPort() + ") подключился");
@@ -64,7 +63,6 @@ public class Menu {
 
                     UdpSender sender = new UdpSender(ipStr, port);
                     sender.send(nickname);
-                    sender.send(Integer.toString(PORT));
 
                     String nicknameFromServer = sender.receive();
                     System.out.println("Вы подлючились к " + nicknameFromServer + "(" + ipStr + ":" +
