@@ -44,13 +44,13 @@ public class UdpSender {
     }
 
     public String receive() {
-        byte[] buffer = new byte[512];
+        byte[] buffer = new byte[1024];
         DatagramPacket response = new DatagramPacket(buffer, buffer.length);
         try {
             sender.receive(response);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return new String(buffer, 0, response.getLength());
+        return new String(response.getData(), 0, response.getLength());
     }
 }
