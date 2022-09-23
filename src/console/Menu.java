@@ -64,7 +64,8 @@ public class Menu {
                     sender.send(nickname);
                     UdpReceiver receiver = new UdpReceiver(ipStr, port);
                     String nicknameFromServer = receiver.receive();
-                    System.out.println("Вы подлючились к " + nicknameFromServer);
+                    System.out.println("Вы подлючились к " + nicknameFromServer + "(" + receiver.getSenderIp() + ":" +
+                    receiver.getSenderPort() + ")");
                 }
             }
         }
