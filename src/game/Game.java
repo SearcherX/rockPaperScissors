@@ -3,12 +3,19 @@ package game;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
     private final ArrayList<Round> rounds = new ArrayList<>();
     private final LocalDateTime startTime;
     private LocalDateTime stopTime = null;
+
+    HashMap<Figure, Integer> figuresCount = new HashMap<>() {{
+        put(Figure.ROCK, 0);
+        put(Figure.SCISSORS, 0);
+        put(Figure.PAPER, 0);
+    }};
 
     public Game() {
         startTime = LocalDateTime.now();
@@ -35,18 +42,32 @@ public class Game {
 
     public void stop() {
         stopTime = LocalDateTime.now();
+        setFigureCountMap();
     }
 
-    public String getGameDuration() {
+    public HashMap<Figure, Integer> getFiguresCountMap() {
+        return figuresCount;
+    }
+
+    //метод подсчета количества выборов каждой фигуры
+    public void setFigureCountMap() {
+        figuresCount = new HashMap<>() {{
+            put(Figure.ROCK, 0);
+            put(Figure.SCISSORS, 0);
+            put(Figure.PAPER, 0);
+        }};
+
+        for (Round round: getRounds()) {
+            for (Map.Entry<Figure, Integer> entry: round.getFigureCountMap().entrySet()) {
+                figuresCount.put(entry.getKey(), figuresCount.get(entry.getKey()) + entry.getValue());
+            }
+        }
+    }
+
+    public long getGameDuration() {
         if (stopTime == null)
             throw new RuntimeException("Игра ещё не закончена");
 
-        long millis = Duration.between(startTime, stopTime).toMillis();
-        return String.format("%02d:%02d:%02d",
-                TimeUnit.MILLISECONDS.toHours(millis),
-                TimeUnit.MILLISECONDS.toMinutes(millis) -
-                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-                TimeUnit.MILLISECONDS.toSeconds(millis) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+        return Duration.between(startTime, stopTime).toMillis();
     }
 }

@@ -1,14 +1,26 @@
 package game;
 
+import java.util.HashMap;
+
 public class Round {
     private final Figure player1choice;
     private final Figure player2choice;
     private final int result;
+    private final HashMap<Figure, Integer> figureCountMap = new HashMap<>() {{
+        put(Figure.ROCK, 0);
+        put(Figure.SCISSORS, 0);
+        put(Figure.PAPER, 0);
+    }};
 
     public Round(Figure player1choice, Figure player2choice) {
         this.player1choice = player1choice;
         this.player2choice = player2choice;
+        setFigureCountMap(player1choice, player2choice);
         result = processResult();
+    }
+
+    public HashMap<Figure, Integer> getFigureCountMap() {
+        return figureCountMap;
     }
 
     public Figure getPlayer1choice() {
@@ -34,5 +46,11 @@ public class Round {
         else
             res = 2;
         return res;
+    }
+
+    //запомнить выбор
+    private void setFigureCountMap(Figure player1choice, Figure player2choice) {
+        figureCountMap.put(player1choice, figureCountMap.get(player1choice) + 1);
+        figureCountMap.put(player2choice, figureCountMap.get(player2choice) + 1);
     }
 }

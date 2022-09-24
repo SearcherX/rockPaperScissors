@@ -7,6 +7,8 @@ import game.Figure;
 import game.Game;
 import game.Match;
 import game.Round;
+import org.w3c.dom.ls.LSOutput;
+import statistics.Statistics;
 
 import java.net.DatagramSocket;
 import java.util.Random;
@@ -36,7 +38,7 @@ public class Menu {
 
             if (choice1 == 0)
                 break;
-            else if (choice1 > 1 && choice1 <= 3)
+            else if (choice1 >= 1 && choice1 <= 3)
                 stop = selectFigure(in, choice1);
         }
 
@@ -51,6 +53,7 @@ public class Menu {
         String player2;
         String mode;
         IUDPSocket socket = null;
+        Match match = new Match();
 
         if (choice == 1) {
             player1 = nickname;
@@ -105,11 +108,10 @@ public class Menu {
             player1 = nickname;
             mode = "Человек-человек";
         }
-        boolean stop = false;
-        Match match = new Match();
 
         System.out.println("Вы выбрали режим " + mode);
         System.out.println("Начинается матч");
+        Statistics statistics = new Statistics(player1, player2);
         if (choice == 1 || choice == 3) {
             System.out.println("Выберите действие:");
             System.out.println("1 - выбрать камень");
@@ -130,25 +132,30 @@ public class Menu {
                 Figure player2Choice = Figure.ROCK;
                 int choice2 = 0;
 
-                if (choice == 2)
+                if (choice == 2) {
                     player1Choice = getComputerChoice();
+                    System.out.println(player1 + " выбрал " + player1Choice);
+                    //задержка компьютера после хода
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 else {
-                    while (!stop) {
+                    while (true) {
                         choice2 = in.nextInt();
 
                         if (choice2 == 0) {
-                            stop = true;
+                            return true;
                         } else if (choice2 >= 1 && choice2 <= 3) {
                             player1Choice = intToFigure(choice2 - 1);
-                            System.out.println("Вы выбрали " + player1Choice + ". Ожидаем ход оппонента");
+                            System.out.println("Вы (" + player1 + ") выбрали " + player1Choice +
+                                    ". Ожидаем ход оппонента");
                             break;
                         } else
                             System.out.println(choice2 + " не поддерживается");
                     }
-                }
-
-                if (stop) {
-                    break;
                 }
 
                 if (choice == 3) {
@@ -159,21 +166,23 @@ public class Menu {
 
                 Round curRound = game.setRound(player1Choice, player2Choice);
                 System.out.println("Оппонент " + player2 + " выбрал " + player2Choice);
-//                System.out.println(player1 + " выбрал " + player1Choice + ", " +
-//                        player2 + " выбрал " + player2Choice);
                 printWinner(player1, player2, curRound.getResult());
 
             }
 
-            if (stop) {
-                break;
-            }
+            game.stop();
+
+            System.out.println("Результат игры:");
+            System.out.println(statistics.getGameResult(game, i));
+            System.out.println("Длительность игры: " + statistics.getTime(game.getGameDuration()));
         }
+
         System.out.println("Результат матча:");
-        for (Game game : match.getGames()) {
-            System.out.println(game.getResult());
-        }
-        return stop;
+        System.out.println(statistics.getMatchResult(match));
+        System.out.println("Длительность матча: " + statistics.getTime(statistics.sumTime(match)));
+        System.out.println("Самая популярная фигура матча: " + statistics.getMostPopularFigure(match));
+        System.out.println("Самая непопулярная фигура матча: " + statistics.getMostUnPopularFigure(match));
+        return true;
     }
 
     public String getNickname() {
