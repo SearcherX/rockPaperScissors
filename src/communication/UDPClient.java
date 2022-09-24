@@ -3,7 +3,7 @@ package communication;
 import java.io.IOException;
 import java.net.*;
 
-public class UDPClient {
+public class UDPClient implements IUDPSocket {
     private DatagramSocket clientSocket;
     private InetAddress serverIP = null;
     private int serverPort = 0;
@@ -20,7 +20,9 @@ public class UDPClient {
 
     public void send(String msg) {
         try {
+            /* Создайте буфер для хранения отправляемых данных. */
             byte[] sendingDataBuffer = new byte[1024];
+            // Преобразуйте строку в байты и сохраните в буфер
             sendingDataBuffer = msg.getBytes();
 
             // Создайте UDP-пакет
@@ -37,12 +39,15 @@ public class UDPClient {
     public String receive() {
         String receivedData = null;
         try {
+            /* Создайте буфер для хранения получаемых данных. */
             byte[] receivingDataBuffer = new byte[1024];
-            // Получите ответ от сервера, т.е. предложение из заглавных букв
+            /* Создайте экземпляр UDP-пакета для хранения клиентских данных с использованием буфера
+            для полученных данных */
             DatagramPacket receivingPacket = new DatagramPacket(receivingDataBuffer, receivingDataBuffer.length);
+            // Получите данные от клиента и сохраните их в receivingPacket
             clientSocket.receive(receivingPacket);
 
-            // Выведите на экране полученные данные
+            // Преобразуйте данные в строку
             receivedData =  new String(receivingPacket.getData(), 0, receivingPacket.getLength());
         } catch (IOException e) {
             e.printStackTrace();

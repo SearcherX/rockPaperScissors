@@ -1,11 +1,14 @@
 package console;
 
+import communication.IUDPSocket;
 import communication.UDPClient;
 import communication.UDPServer;
 import game.Figure;
 import game.Game;
 import game.Match;
 import game.Round;
+
+import java.net.DatagramSocket;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -34,7 +37,7 @@ public class Menu {
             if (choice1 == 0)
                 break;
             else if (choice1 == 1 || choice1 == 2)
-                stop = selectFigure(in, choice1, null);
+                stop = selectFigure(in, choice1, null, null);
             else if (choice1 == 3) {
                 System.out.println("Выберите действие:");
                 System.out.println("1 - создать игру");
@@ -53,7 +56,7 @@ public class Menu {
                             receiver.getSenderPort() + ") подключился");
 
                     receiver.send(nickname);
-//                    stop = selectFigure(in, choice1, opponent);
+                    stop = selectFigure(in, choice1, opponent, receiver);
                 } else if (choice2 == 2) {
                     System.out.print("Введите ip сервера:");
                     String ipStr = in.next();
@@ -67,6 +70,8 @@ public class Menu {
                     String nicknameFromServer = sender.receive();
                     System.out.println("Вы подлючились к " + nicknameFromServer + "(" + ipStr + ":" +
                             port + ")");
+
+                    stop = selectFigure(in, choice1, nicknameFromServer, sender);
                 }
             }
         }
@@ -74,7 +79,7 @@ public class Menu {
 
     }
 
-    public boolean selectFigure(Scanner in, int choice, String opponent) {
+    public boolean selectFigure(Scanner in, int choice, String opponent, IUDPSocket socket) {
         String player1;
         String player2;
         String mode;
@@ -114,12 +119,14 @@ public class Menu {
             for (int j = 0; j < Match.ROUNDS_PER_GAME_COUNT; j++) {
                 System.out.println((j + 1) + "-ый раунд");
                 Figure player1Choice = Figure.ROCK;
-                Figure player2Choice = getComputerChoice();
+                Figure player2Choice = Figure.ROCK;
+                int choice2 = 0;
+
                 if (choice == 2)
                     player1Choice = getComputerChoice();
                 else {
                     while (!stop) {
-                        int choice2 = in.nextInt();
+                        choice2 = in.nextInt();
 
                         if (choice2 == 0) {
                             stop = true;
@@ -130,9 +137,16 @@ public class Menu {
                             System.out.println(choice2 + " не поддерживается");
                     }
                 }
+
                 if (stop) {
                     break;
                 }
+
+                if (choice == 3) {
+                    socket.send(String.valueOf(choice2 - 1));
+                    player2Choice = intToFigure(Integer.parseInt(socket.receive()));
+                } else
+                    player2Choice = getComputerChoice();
 
                 Round curRound = game.setRound(player1Choice, player2Choice);
                 System.out.println(player1 + " выбрал " + player1Choice + ", " +
