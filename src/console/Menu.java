@@ -102,7 +102,7 @@ public class Menu {
 
         System.out.println("Вы выбрали режим " + mode);
         System.out.println("Начинается матч");
-        if (choice == 1) {
+        if (choice == 1 || choice == 3) {
             System.out.println("Выберите действие:");
             System.out.println("1 - выбрать камень");
             System.out.println("2 - выбрать ножницы");
