@@ -54,4 +54,9 @@ public class UDPClient implements IUDPSocket {
         }
         return receivedData;
     }
+
+    public void close() {
+        if (clientSocket != null)
+            clientSocket.close();
+    }
 }

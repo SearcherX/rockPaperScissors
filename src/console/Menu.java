@@ -42,6 +42,7 @@ public class Menu {
                 stop = selectFigure(in, choice1);
         }
 
+        in.close();
 
     }
 
@@ -128,8 +129,8 @@ public class Menu {
             System.out.println("===" + (i + 1) + "-ая игра===");
             for (int j = 0; j < Match.ROUNDS_PER_GAME_COUNT; j++) {
                 System.out.println((j + 1) + "-ый раунд");
-                Figure player1Choice = Figure.ROCK;
-                Figure player2Choice = Figure.ROCK;
+                Figure player1Choice;
+                Figure player2Choice;
                 int choice2 = 0;
 
                 if (choice == 2) {
@@ -176,6 +177,9 @@ public class Menu {
             System.out.println(statistics.getGameResult(game, i));
             System.out.println("Длительность игры: " + statistics.getTime(game.getGameDuration()));
         }
+
+        if (choice == 3)
+            socket.close();
 
         System.out.println("Результат матча:");
         System.out.println(statistics.getMatchResult(match));

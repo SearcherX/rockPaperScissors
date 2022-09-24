@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="061bc056-12cb-432a-be0c-c55aaa8508b9" name="Changes" comment="Game v1.5">
-      <change afterPath="$PROJECT_DIR$/src/statistics/Statistics.java" afterDir="false" />
+    <list default="true" id="061bc056-12cb-432a-be0c-c55aaa8508b9" name="Changes" comment="Game v1.6">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/console/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/console/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/game/Round.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/game/Round.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +66,7 @@
       <workItem from="1663919009574" duration="15606000" />
       <workItem from="1663949456870" duration="3631000" />
       <workItem from="1663963215684" duration="4474000" />
-      <workItem from="1664006389533" duration="18027000" />
+      <workItem from="1664006389533" duration="18741000" />
     </task>
     <task id="LOCAL-00001" summary="Game v1.0">
       <created>1663941718357</created>
@@ -226,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664014915999</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Game v1.6">
+      <created>1664035727890</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1664035727890</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,6 +253,7 @@
     <MESSAGE value="Game v1.3" />
     <MESSAGE value="Game v1.4" />
     <MESSAGE value="Game v1.5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game v1.5" />
+    <MESSAGE value="Game v1.6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game v1.6" />
   </component>
 </project>

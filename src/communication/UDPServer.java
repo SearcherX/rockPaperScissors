@@ -71,4 +71,9 @@ public class UDPServer  implements IUDPSocket {
             e.printStackTrace();
         }
     }
+
+    public void close() {
+        if (serverSocket != null)
+            serverSocket.close();
+    }
 }
