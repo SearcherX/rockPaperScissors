@@ -1,7 +1,7 @@
 package console;
 
-import communication.UdpReceiver;
-import communication.UdpSender;
+import communication.UDPClient;
+import communication.UDPServer;
 import game.Figure;
 import game.Game;
 import game.Match;
@@ -45,7 +45,7 @@ public class Menu {
                 if (choice2 == 0)
                     break;
                 else if (choice2 == 1) {
-                    UdpReceiver receiver = new UdpReceiver(IP, PORT);
+                    UDPServer receiver = new UDPServer(PORT);
                     System.out.println("Ожидаем оппонента");
                     String opponent = receiver.receive();
 
@@ -61,7 +61,7 @@ public class Menu {
                     System.out.print("Введите port сервера:");
                     int port = in.nextInt();
 
-                    UdpSender sender = new UdpSender(ipStr, port);
+                    UDPClient sender = new UDPClient(ipStr, port);
                     sender.send(nickname);
 
                     String nicknameFromServer = sender.receive();
