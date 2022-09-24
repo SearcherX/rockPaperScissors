@@ -43,7 +43,7 @@ public class UDPClient {
             clientSocket.receive(receivingPacket);
 
             // Выведите на экране полученные данные
-            receivedData =  new String(receivingPacket.getData());
+            receivedData =  new String(receivingPacket.getData(), 0, receivingPacket.getLength());
         } catch (IOException e) {
             e.printStackTrace();
         }

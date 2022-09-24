@@ -42,7 +42,7 @@ public class UDPServer {
 
             // Получите данные от клиента и сохраните их в inputPacket
             serverSocket.receive(inputPacket);
-            receivedData = new String(inputPacket.getData());
+            receivedData = new String(inputPacket.getData(), 0, inputPacket.getLength());
 
             // Получите IP-адрес и порт клиента
             senderAddress = inputPacket.getAddress();
