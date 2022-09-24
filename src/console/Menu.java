@@ -74,7 +74,7 @@ public class Menu {
                 int choice2 = in.nextInt();
 
                 if (choice2 == 0)
-                    return false;
+                    return true;
                 else if (choice2 == 1) {
                     UDPServer receiver = new UDPServer(PORT);
                     System.out.println("Ожидаем оппонента");
@@ -186,7 +186,7 @@ public class Menu {
         System.out.println("Длительность матча: " + statistics.getTime(statistics.sumTime(match)));
         System.out.println("Самая популярная фигура матча: " + statistics.getMostPopularFigure(match));
         System.out.println("Самая непопулярная фигура матча: " + statistics.getMostUnPopularFigure(match));
-        return true;
+        return false;
     }
 
     public String getNickname() {
