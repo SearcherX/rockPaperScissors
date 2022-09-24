@@ -36,27 +36,52 @@ public class Menu {
 
             if (choice1 == 0)
                 break;
-            else if (choice1 == 1 || choice1 == 2)
-                stop = selectFigure(in, choice1, null, null);
-            else if (choice1 == 3) {
-                System.out.println("Выберите действие:");
-                System.out.println("1 - создать игру");
-                System.out.println("2 - подключиться к игре");
-                System.out.println("0 - выход");
+            else if (choice1 > 1 && choice1 <= 3)
+                stop = selectFigure(in, choice1);
+        }
+
+
+    }
+
+    public boolean selectFigure(Scanner in, int choice) {
+        if (choice < 1 || choice > 3)
+            throw new IllegalArgumentException(choice + " не поддерживается");
+
+        String player1;
+        String player2;
+        String mode;
+        IUDPSocket socket = null;
+
+        if (choice == 1) {
+            player1 = nickname;
+            player2 = "Компьютер";
+            mode = "Человек-компьютер";
+        } else if (choice == 2) {
+            player1 = "Компьютер 1";
+            player2 = "Компьютер 2";
+            mode = "Компьютер-компьютер";
+        } else  {
+            System.out.println("Выберите действие:");
+            System.out.println("1 - создать игру");
+            System.out.println("2 - подключиться к игре");
+            System.out.println("0 - выход");
+
+            while (true) {
                 int choice2 = in.nextInt();
 
                 if (choice2 == 0)
-                    break;
+                    return false;
                 else if (choice2 == 1) {
                     UDPServer receiver = new UDPServer(PORT);
                     System.out.println("Ожидаем оппонента");
-                    String opponent = receiver.receive();
+                    player2 = receiver.receive();
 
-                    System.out.println("Игрок " + opponent + "(" + receiver.getSenderAddress().getHostAddress() + ":" +
+                    System.out.println("Игрок " + player2 + "(" + receiver.getSenderAddress().getHostAddress() + ":" +
                             receiver.getSenderPort() + ") подключился");
 
                     receiver.send(nickname);
-                    stop = selectFigure(in, choice1, opponent, receiver);
+                    socket = receiver;
+                    break;
                 } else if (choice2 == 2) {
                     System.out.print("Введите ip сервера:");
                     String ipStr = in.next();
@@ -67,34 +92,17 @@ public class Menu {
                     UDPClient sender = new UDPClient(ipStr, port);
                     sender.send(nickname);
 
-                    String nicknameFromServer = sender.receive();
-                    System.out.println("Вы подлючились к " + nicknameFromServer + "(" + ipStr + ":" +
+                    player2 = sender.receive();
+                    System.out.println("Вы подлючились к " + player2 + "(" + ipStr + ":" +
                             port + ")");
 
-                    stop = selectFigure(in, choice1, nicknameFromServer, sender);
+                    socket = sender;
+                    break;
+                } else {
+                    System.out.println(choice2 + " не поддерживается");
                 }
             }
-        }
-
-
-    }
-
-    public boolean selectFigure(Scanner in, int choice, String opponent, IUDPSocket socket) {
-        String player1;
-        String player2;
-        String mode;
-
-        if (choice == 1) {
             player1 = nickname;
-            player2 = "Компьютер";
-            mode = "Человек-компьютер";
-        } else if (choice == 2) {
-            player1 = "Компьютер 1";
-            player2 = "Компьютер 2";
-            mode = "Компьютер-компьютер";
-        } else {
-            player1 = nickname;
-            player2 = opponent;
             mode = "Человек-человек";
         }
         boolean stop = false;
