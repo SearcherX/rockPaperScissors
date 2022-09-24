@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="061bc056-12cb-432a-be0c-c55aaa8508b9" name="Changes" comment="Game v1.2">
+      <change afterPath="$PROJECT_DIR$/src/communication/IUDPSocket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/communication/UdpReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/communication/UdpReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/communication/UdpSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/communication/UdpSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/communication/UDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/communication/UDPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/communication/UDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/communication/UDPServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/console/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/console/Menu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +18,7 @@
       <list>
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -64,7 +66,8 @@
       <updated>1663919007346</updated>
       <workItem from="1663919009574" duration="15606000" />
       <workItem from="1663949456870" duration="3631000" />
-      <workItem from="1663963215684" duration="1438000" />
+      <workItem from="1663963215684" duration="4474000" />
+      <workItem from="1664006389533" duration="2780000" />
     </task>
     <task id="LOCAL-00001" summary="Game v1.0">
       <created>1663941718357</created>
@@ -115,7 +118,77 @@
       <option name="project" value="LOCAL" />
       <updated>1663952682013</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Game v1.2">
+      <created>1663964681091</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1663964681091</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Game v1.2">
+      <created>1663965134447</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1663965134447</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Game v1.2">
+      <created>1663965351938</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1663965351938</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Game v1.2">
+      <created>1663965594420</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1663965594420</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Game v1.2">
+      <created>1663966148119</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1663966148119</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Game v1.2">
+      <created>1663966245422</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1663966245422</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Game v1.2">
+      <created>1663966761702</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1663966761702</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Game v1.2">
+      <created>1663967527895</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1663967527895</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Game v1.2">
+      <created>1664007777923</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1664007777923</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Game v1.2">
+      <created>1664008119339</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1664008119339</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
