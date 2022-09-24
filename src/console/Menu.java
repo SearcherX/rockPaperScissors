@@ -60,7 +60,7 @@ public class Menu {
             player1 = "Компьютер 1";
             player2 = "Компьютер 2";
             mode = "Компьютер-компьютер";
-        } else  {
+        } else {
             System.out.println("Выберите действие:");
             System.out.println("1 - создать игру");
             System.out.println("2 - подключиться к игре");
@@ -140,6 +140,7 @@ public class Menu {
                             stop = true;
                         } else if (choice2 >= 1 && choice2 <= 3) {
                             player1Choice = intToFigure(choice2 - 1);
+                            System.out.println("Вы выбрали " + player1Choice + ". Ожидаем ход оппонента");
                             break;
                         } else
                             System.out.println(choice2 + " не поддерживается");
@@ -157,8 +158,9 @@ public class Menu {
                     player2Choice = getComputerChoice();
 
                 Round curRound = game.setRound(player1Choice, player2Choice);
-                System.out.println(player1 + " выбрал " + player1Choice + ", " +
-                        player2 + " выбрал " + player2Choice);
+                System.out.println("Оппонент " + player2 + " выбрал " + player2Choice);
+//                System.out.println(player1 + " выбрал " + player1Choice + ", " +
+//                        player2 + " выбрал " + player2Choice);
                 printWinner(player1, player2, curRound.getResult());
 
             }
