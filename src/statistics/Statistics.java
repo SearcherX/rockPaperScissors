@@ -127,11 +127,14 @@ public class Statistics {
     //метод нахождения самой популярной фигуры за матч
     public Figure getMostPopularFigure(Match match) {
         Figure mostPopularFigure = Figure.ROCK;
-        int max = 0;
+        int max = match.getGames().get(0).getFiguresCountMap().get(Figure.ROCK);;
 
+        //внешний цикл анализирует игры из матча
         for (Game game : match.getGames()) {
             HashMap<Figure, Integer> figuresCount = game.getFiguresCountMap();
+            //внутренний цикл анализирует словари<фигура, количество> игры
             for (Map.Entry<Figure, Integer> entry : figuresCount.entrySet()) {
+                //запомнить максимальное число и соответствующую фигуру
                 if (entry.getValue() > max) {
                     max = entry.getValue();
                     mostPopularFigure = entry.getKey();
@@ -144,11 +147,14 @@ public class Statistics {
     //метод нахождения самой популярной фигуры за матч
     public Figure getMostUnPopularFigure(Match match) {
         Figure mostUnPopularFigure = Figure.ROCK;
-        int min = 0;
+        int min = match.getGames().get(0).getFiguresCountMap().get(Figure.ROCK);
 
+        //внешний цикл анализирует игры из матча
         for (Game game : match.getGames()) {
             HashMap<Figure, Integer> figuresCount = game.getFiguresCountMap();
+            //внутренний цикл анализирует словари<фигура, количество> игры
             for (Map.Entry<Figure, Integer> entry : figuresCount.entrySet()) {
+                //запомнить минимальное число и соответствующую фигуру
                 if (entry.getValue() < min) {
                     min = entry.getValue();
                     mostUnPopularFigure = entry.getKey();

@@ -57,7 +57,7 @@ public class Menu {
         IUDPSocket socket = null;
         Match match = new Match();
 
-        Statistics statistics = null;
+        Statistics statistics;
         try {
             if (choice == 1) {
                 player1 = nickname;
@@ -78,6 +78,7 @@ public class Menu {
 
                     if (choice2 == 0)
                         return true;
+                        //Создать UDP-сокет, к которому подключится оппонент
                     else if (choice2 == 1) {
                         UDPServer receiver = new UDPServer(PORT);
                         System.out.println("Ожидаем оппонента");
@@ -89,6 +90,7 @@ public class Menu {
                         receiver.send(nickname);
                         socket = receiver;
                         break;
+                        //Создать UDP-сокет, который подключится к ожидающему сокету
                     } else if (choice2 == 2) {
                         System.out.print("Введите ip сервера:");
                         String ipStr = in.next();
@@ -113,9 +115,11 @@ public class Menu {
                 mode = "Человек-человек";
             }
 
+            //общая логика для 3-ёх режимов
             System.out.println("Вы выбрали режим " + mode);
             System.out.println("Начинается матч");
             statistics = new Statistics(player1, player2);
+
             if (choice == 1 || choice == 3) {
                 System.out.println("Выберите действие:");
                 System.out.println("1 - выбрать камень");
@@ -126,37 +130,45 @@ public class Menu {
                 System.out.println("0 - выход");
             }
 
+            //внешний for следуют по играм
             for (int i = 0; i < Match.GAMES_PER_MATCH_COUNT; i++) {
                 Game game = new Game();
                 match.getGames().add(game);
                 System.out.println("===" + (i + 1) + "-ая игра===");
+                //внутренни for следует по раундам
                 for (int j = 0; j < Match.ROUNDS_PER_GAME_COUNT; j++) {
                     System.out.println((j + 1) + "-ый раунд");
                     Figure player1FigureChoice;
                     Figure player2FigureChoice;
                     Round curRound = new Round();
 
-                    int choice2 = 0;
+                    int choice2;
 
                     if (choice == 2) {
+                        //режим компьютер-компьютер
                         player1FigureChoice = getComputerChoice();
+                        player2FigureChoice = getComputerChoice();
+                        curRound.setPlayer1FigureChoice(player1FigureChoice);
+                        curRound.setPlayer2FigureChoice(player2FigureChoice);
+
                         System.out.println(player1 + " выбрал " + player1FigureChoice);
+                        System.out.println("Оппонент " + player2 + " выбрал " + player2FigureChoice);
                         //задержка компьютера после хода
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else {
+                    } else {
+                        //ваш выбор (1 и 3 режим) и его анализ
                         while (true) {
                             choice2 = in.nextInt();
 
                             if (choice2 == 0) {
                                 if (choice == 3) {
                                     socket.send(String.valueOf(choice2));
-                                    return true;
                                 }
+                                return true;
                             } else if (choice2 >= 1 && choice2 <= 3) {
                                 player1FigureChoice = intToFigure(choice2 - 1);
                                 System.out.println("Вы (" + player1 + ") выбрали " + player1FigureChoice +
@@ -170,32 +182,36 @@ public class Menu {
                             } else
                                 System.out.println(choice2 + " не поддерживается");
                         }
-                    }
-
-                    if (choice == 3) {
-                        socket.send(String.valueOf(choice2));
-                        int player2Choice = Integer.parseInt(socket.receive());
-
-                        if (player2Choice == 0) {
-                            System.out.println("Оппонент " + player2 + " покинул игру");
-                            return false;
-                        } else if (player2Choice == 5) {
-                            System.out.println("Оппонент " + player2 + " признал поражение");
-                            curRound.setResult(1);
-                        } else {
-                            player2FigureChoice = intToFigure(player2Choice - 1);
+                        //выбор оппонента: режим человек-компьютер
+                        if (choice == 1) {
+                            player2FigureChoice = getComputerChoice();
                             curRound.setPlayer2FigureChoice(player2FigureChoice);
                             System.out.println("Оппонент " + player2 + " выбрал " + player2FigureChoice);
+                        } else {
+                            //выбор оппонента: режим человек-человек
+                            socket.send(String.valueOf(choice2));
+                            int player2Choice = Integer.parseInt(socket.receive());
+
+                            if (player2Choice == 0) {
+                                System.out.println("Оппонент " + player2 + " покинул игру");
+                                return false;
+                            } else if (player2Choice == 5) {
+                                System.out.println("Оппонент " + player2 + " признал поражение");
+                                curRound.setResult(1);
+                            } else {
+                                player2FigureChoice = intToFigure(player2Choice - 1);
+                                curRound.setPlayer2FigureChoice(player2FigureChoice);
+                                System.out.println("Оппонент " + player2 + " выбрал " + player2FigureChoice);
+                            }
                         }
-                    } else {
-                        player2FigureChoice = getComputerChoice();
-                        curRound.setPlayer2FigureChoice(player2FigureChoice);
                     }
 
+                    game.getRounds().add(curRound);
                     printWinner(player1, player2, curRound.getResult());
 
                 }
 
+                //запомнить время окончания игры
                 game.stop();
 
                 System.out.println("Результат игры:");
