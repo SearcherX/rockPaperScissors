@@ -171,7 +171,7 @@ public class Menu {
 
                         if (player2Choice == 0) {
                             System.out.println("Оппонент " + player2 + " покинул игру");
-                            return true;
+                            return false;
                         }
 
                         player2FigureChoice = intToFigure(player2Choice - 1);
