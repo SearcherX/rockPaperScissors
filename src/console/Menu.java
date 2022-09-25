@@ -40,14 +40,15 @@ public class Menu {
             if (choice1 == 0)
                 break;
             else if (choice1 >= 1 && choice1 <= 3)
-                stop = selectFigure(in, choice1);
+                stop = selectMode(in, choice1);
         }
+        System.out.println("Вы вышли из приложения");
 
         in.close();
 
     }
 
-    public boolean selectFigure(Scanner in, int choice) {
+    public boolean selectMode(Scanner in, int choice) {
         if (choice < 1 || choice > 3)
             throw new IllegalArgumentException(choice + " не поддерживается");
 
@@ -218,7 +219,6 @@ public class Menu {
                 System.out.println(statistics.getGameResult(game, i));
                 System.out.println("Длительность игры: " + statistics.getTime(game.getGameDuration()));
             }
-            System.out.println("Вы вышли из приложения");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
