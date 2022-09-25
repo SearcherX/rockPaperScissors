@@ -21,11 +21,11 @@ public class Game {
         startTime = LocalDateTime.now();
     }
 
-    public Round setRound(Figure player1choice, Figure player2choice) {
-        Round round = new Round(player1choice, player2choice);
-        rounds.add(round);
-        return round;
-    }
+    //public Round setRound(Figure player1choice, Figure player2choice) {
+        //Round round = new Round(player1choice, player2choice);
+        //rounds.add(round);
+        //return round;
+    //}
 
     public ArrayList<Round> getRounds() {
         return rounds;

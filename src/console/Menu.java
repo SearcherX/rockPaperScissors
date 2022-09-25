@@ -24,7 +24,7 @@ public class Menu {
         Scanner in = new Scanner(System.in);
         boolean stop = false;
 
-        System.out.print("Enter nickname: ");
+        System.out.print("Введите ваш никнейм: ");
         nickname = in.next();
 
         System.out.println("Добро пожаловать в игру «Камень-ножницы-бумага», " + nickname);
@@ -134,6 +134,8 @@ public class Menu {
                     System.out.println((j + 1) + "-ый раунд");
                     Figure player1FigureChoice;
                     Figure player2FigureChoice;
+                    Round curRound = new Round();
+
                     int choice2 = 0;
 
                     if (choice == 2) {
@@ -159,7 +161,11 @@ public class Menu {
                                 player1FigureChoice = intToFigure(choice2 - 1);
                                 System.out.println("Вы (" + player1 + ") выбрали " + player1FigureChoice +
                                         ". Ожидаем ход оппонента");
+                                curRound.setPlayer1FigureChoice(player1FigureChoice);
                                 break;
+                            } else if (choice2 == 5) {
+                                System.out.println("Вы (" + player1 + ") признали поражение");
+                                curRound.setResult(2);
                             } else
                                 System.out.println(choice2 + " не поддерживается");
                         }
@@ -172,14 +178,19 @@ public class Menu {
                         if (player2Choice == 0) {
                             System.out.println("Оппонент " + player2 + " покинул игру");
                             return false;
+                        } else if (player2Choice == 5) {
+                            System.out.println("Оппонент " + player2 + " признал поражение");
+                            curRound.setResult(1);
+                        } else {
+                            player2FigureChoice = intToFigure(player2Choice - 1);
+                            curRound.setPlayer2FigureChoice(player2FigureChoice);
+                            System.out.println("Оппонент " + player2 + " выбрал " + player2FigureChoice);
                         }
-
-                        player2FigureChoice = intToFigure(player2Choice - 1);
-                    } else
+                    } else {
                         player2FigureChoice = getComputerChoice();
+                        curRound.setPlayer2FigureChoice(player2FigureChoice);
+                    }
 
-                    Round curRound = game.setRound(player1FigureChoice, player2FigureChoice);
-                    System.out.println("Оппонент " + player2 + " выбрал " + player2FigureChoice);
                     printWinner(player1, player2, curRound.getResult());
 
                 }
@@ -190,6 +201,7 @@ public class Menu {
                 System.out.println(statistics.getGameResult(game, i));
                 System.out.println("Длительность игры: " + statistics.getTime(game.getGameDuration()));
             }
+            System.out.println("Вы вышли из приложения");
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
