@@ -164,7 +164,7 @@ public class Menu {
                                 curRound.setPlayer1FigureChoice(player1FigureChoice);
                                 break;
                             } else if (choice2 == 5) {
-                                System.out.println("Вы (" + player1 + ") признали поражение");
+                                System.out.println("Вы (" + player1 + ") признали поражение. Ожидаем ход оппонента");
                                 curRound.setResult(2);
                                 break;
                             } else
