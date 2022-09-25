@@ -12,12 +12,12 @@ public class UDPServer  implements IUDPSocket {
     private int senderPort;
 
 
-    public UDPServer(int port) {
-        try {
+    public UDPServer(int port) throws SocketException {
+        //try {
             serverSocket = new DatagramSocket(port);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+        //} catch (SocketException e) {
+            //e.printStackTrace();
+        //}
     }
 
     public InetAddress getSenderAddress() {
@@ -28,9 +28,9 @@ public class UDPServer  implements IUDPSocket {
         return senderPort;
     }
 
-    public String receive() {
+    public String receive() throws IOException {
         String receivedData = null;
-        try {
+        //try {
              /* Создайте буфер для хранения получаемых данных. */
             byte[] receivingDataBuffer = new byte[1024];
 
@@ -46,14 +46,14 @@ public class UDPServer  implements IUDPSocket {
             // Получите IP-адрес и порт клиента
             senderAddress = inputPacket.getAddress();
             senderPort = inputPacket.getPort();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //} catch (IOException e) {
+            //e.printStackTrace();
+        //}
         return receivedData;
     }
 
-    public void send(String msg) {
-        try {
+    public void send(String msg) throws IOException {
+        //try {
             /* Создайте буфер для хранения отправляемых данных. */
             byte[] sendingDataBuffer;
             // Преобразуйте строку в байты и сохраните в буфер
@@ -67,9 +67,9 @@ public class UDPServer  implements IUDPSocket {
 
             // Отправьте пакет клиенту
             serverSocket.send(outputPacket);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //} catch (IOException e) {
+            //e.printStackTrace();
+        //}
     }
 
     public void close() {

@@ -10,12 +10,13 @@ import game.Round;
 import org.w3c.dom.ls.LSOutput;
 import statistics.Statistics;
 
+import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Menu {
-    private static final String IP = "192.168.1.4";
     private static final int PORT = 1024;
     private String nickname;
 
@@ -56,130 +57,137 @@ public class Menu {
         IUDPSocket socket = null;
         Match match = new Match();
 
-        if (choice == 1) {
-            player1 = nickname;
-            player2 = "Компьютер";
-            mode = "Человек-компьютер";
-        } else if (choice == 2) {
-            player1 = "Компьютер 1";
-            player2 = "Компьютер 2";
-            mode = "Компьютер-компьютер";
-        } else {
-            System.out.println("Выберите действие:");
-            System.out.println("1 - создать игру");
-            System.out.println("2 - подключиться к игре");
-            System.out.println("0 - выход");
+        Statistics statistics = null;
+        try {
+            if (choice == 1) {
+                player1 = nickname;
+                player2 = "Компьютер";
+                mode = "Человек-компьютер";
+            } else if (choice == 2) {
+                player1 = "Компьютер 1";
+                player2 = "Компьютер 2";
+                mode = "Компьютер-компьютер";
+            } else {
+                System.out.println("Выберите действие:");
+                System.out.println("1 - создать игру");
+                System.out.println("2 - подключиться к игре");
+                System.out.println("0 - выход");
 
-            while (true) {
-                int choice2 = in.nextInt();
+                while (true) {
+                    int choice2 = in.nextInt();
 
-                if (choice2 == 0)
-                    return true;
-                else if (choice2 == 1) {
-                    UDPServer receiver = new UDPServer(PORT);
-                    System.out.println("Ожидаем оппонента");
-                    player2 = receiver.receive();
+                    if (choice2 == 0)
+                        return true;
+                    else if (choice2 == 1) {
+                        UDPServer receiver = new UDPServer(PORT);
+                        System.out.println("Ожидаем оппонента");
+                        player2 = receiver.receive();
 
-                    System.out.println("Игрок " + player2 + "(" + receiver.getSenderAddress().getHostAddress() + ":" +
-                            receiver.getSenderPort() + ") подключился");
+                        System.out.println("Игрок " + player2 + "(" + receiver.getSenderAddress().getHostAddress() + ":" +
+                                receiver.getSenderPort() + ") подключился");
 
-                    receiver.send(nickname);
-                    socket = receiver;
-                    break;
-                } else if (choice2 == 2) {
-                    System.out.print("Введите ip сервера:");
-                    String ipStr = in.next();
+                        receiver.send(nickname);
+                        socket = receiver;
+                        break;
+                    } else if (choice2 == 2) {
+                        System.out.print("Введите ip сервера:");
+                        String ipStr = in.next();
 
-                    System.out.print("Введите port сервера:");
-                    int port = in.nextInt();
+                        System.out.print("Введите port сервера:");
+                        int port = in.nextInt();
 
-                    UDPClient sender = new UDPClient(ipStr, port);
-                    sender.send(nickname);
+                        UDPClient sender = new UDPClient(ipStr, port);
+                        sender.send(nickname);
 
-                    player2 = sender.receive();
-                    System.out.println("Вы подлючились к " + player2 + "(" + ipStr + ":" +
-                            port + ")");
+                        player2 = sender.receive();
+                        System.out.println("Вы подлючились к " + player2 + "(" + ipStr + ":" +
+                                port + ")");
 
-                    socket = sender;
-                    break;
-                } else {
-                    System.out.println(choice2 + " не поддерживается");
-                }
-            }
-            player1 = nickname;
-            mode = "Человек-человек";
-        }
-
-        System.out.println("Вы выбрали режим " + mode);
-        System.out.println("Начинается матч");
-        Statistics statistics = new Statistics(player1, player2);
-        if (choice == 1 || choice == 3) {
-            System.out.println("Выберите действие:");
-            System.out.println("1 - выбрать камень");
-            System.out.println("2 - выбрать ножницы");
-            System.out.println("3 - выбрать бумагу");
-            System.out.println("4 - предложить ничью");
-            System.out.println("5 - признать поражение");
-            System.out.println("0 - выход");
-        }
-
-        for (int i = 0; i < Match.GAMES_PER_MATCH_COUNT; i++) {
-            Game game = new Game();
-            match.getGames().add(game);
-            System.out.println("===" + (i + 1) + "-ая игра===");
-            for (int j = 0; j < Match.ROUNDS_PER_GAME_COUNT; j++) {
-                System.out.println((j + 1) + "-ый раунд");
-                Figure player1Choice;
-                Figure player2Choice;
-                int choice2 = 0;
-
-                if (choice == 2) {
-                    player1Choice = getComputerChoice();
-                    System.out.println(player1 + " выбрал " + player1Choice);
-                    //задержка компьютера после хода
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        socket = sender;
+                        break;
+                    } else {
+                        System.out.println(choice2 + " не поддерживается");
                     }
                 }
-                else {
-                    while (true) {
-                        choice2 = in.nextInt();
-
-                        if (choice2 == 0) {
-                            return true;
-                        } else if (choice2 >= 1 && choice2 <= 3) {
-                            player1Choice = intToFigure(choice2 - 1);
-                            System.out.println("Вы (" + player1 + ") выбрали " + player1Choice +
-                                    ". Ожидаем ход оппонента");
-                            break;
-                        } else
-                            System.out.println(choice2 + " не поддерживается");
-                    }
-                }
-
-                if (choice == 3) {
-                    socket.send(String.valueOf(choice2 - 1));
-                    player2Choice = intToFigure(Integer.parseInt(socket.receive()));
-                } else
-                    player2Choice = getComputerChoice();
-
-                Round curRound = game.setRound(player1Choice, player2Choice);
-                System.out.println("Оппонент " + player2 + " выбрал " + player2Choice);
-                printWinner(player1, player2, curRound.getResult());
-
+                player1 = nickname;
+                mode = "Человек-человек";
             }
 
-            game.stop();
+            System.out.println("Вы выбрали режим " + mode);
+            System.out.println("Начинается матч");
+            statistics = new Statistics(player1, player2);
+            if (choice == 1 || choice == 3) {
+                System.out.println("Выберите действие:");
+                System.out.println("1 - выбрать камень");
+                System.out.println("2 - выбрать ножницы");
+                System.out.println("3 - выбрать бумагу");
+                System.out.println("4 - предложить ничью");
+                System.out.println("5 - признать поражение");
+                System.out.println("0 - выход");
+            }
 
-            System.out.println("Результат игры:");
-            System.out.println(statistics.getGameResult(game, i));
-            System.out.println("Длительность игры: " + statistics.getTime(game.getGameDuration()));
+            for (int i = 0; i < Match.GAMES_PER_MATCH_COUNT; i++) {
+                Game game = new Game();
+                match.getGames().add(game);
+                System.out.println("===" + (i + 1) + "-ая игра===");
+                for (int j = 0; j < Match.ROUNDS_PER_GAME_COUNT; j++) {
+                    System.out.println((j + 1) + "-ый раунд");
+                    Figure player1Choice;
+                    Figure player2Choice;
+                    int choice2 = 0;
+
+                    if (choice == 2) {
+                        player1Choice = getComputerChoice();
+                        System.out.println(player1 + " выбрал " + player1Choice);
+                        //задержка компьютера после хода
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        while (true) {
+                            choice2 = in.nextInt();
+
+                            if (choice2 == 0) {
+                                return true;
+                            } else if (choice2 >= 1 && choice2 <= 3) {
+                                player1Choice = intToFigure(choice2 - 1);
+                                System.out.println("Вы (" + player1 + ") выбрали " + player1Choice +
+                                        ". Ожидаем ход оппонента");
+                                break;
+                            } else
+                                System.out.println(choice2 + " не поддерживается");
+                        }
+                    }
+
+                    if (choice == 3) {
+                        socket.send(String.valueOf(choice2 - 1));
+                        player2Choice = intToFigure(Integer.parseInt(socket.receive()));
+                    } else
+                        player2Choice = getComputerChoice();
+
+                    Round curRound = game.setRound(player1Choice, player2Choice);
+                    System.out.println("Оппонент " + player2 + " выбрал " + player2Choice);
+                    printWinner(player1, player2, curRound.getResult());
+
+                }
+
+                game.stop();
+
+                System.out.println("Результат игры:");
+                System.out.println(statistics.getGameResult(game, i));
+                System.out.println("Длительность игры: " + statistics.getTime(game.getGameDuration()));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (choice == 3) {
+                assert socket != null;
+                socket.close();
+            }
         }
-
-        if (choice == 3)
-            socket.close();
 
         System.out.println("Результат матча:");
         System.out.println(statistics.getMatchResult(match));
