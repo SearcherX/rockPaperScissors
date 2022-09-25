@@ -166,9 +166,9 @@ public class Menu {
                     }
 
                     if (choice == 3) {
-                        socket.send(String.valueOf(choice2 - 1));
+                        socket.send(String.valueOf(choice2));
                         int player2Choice = Integer.parseInt(socket.receive());
-                        player2FigureChoice = intToFigure(player2Choice);
+                        player2FigureChoice = intToFigure(player2Choice - 1);
                         if (player2Choice == 0) {
                             System.out.println("Оппонент " + player2 + " покинул игру");
                             return true;
