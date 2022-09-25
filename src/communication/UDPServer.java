@@ -29,8 +29,8 @@ public class UDPServer implements IUDPSocket {
         /* Создайте буфер для хранения получаемых данных. */
         byte[] receivingDataBuffer = new byte[1024];
 
-            /* Создайте экземпляр UDP-пакета для хранения клиентских данных с использованием буфера
-            для полученных данных */
+        /* Создайте экземпляр UDP-пакета для хранения клиентских данных с использованием буфера
+        для полученных данных */
         DatagramPacket inputPacket = new DatagramPacket(receivingDataBuffer, receivingDataBuffer.length);
 
         // Получите данные от клиента и сохраните их в inputPacket

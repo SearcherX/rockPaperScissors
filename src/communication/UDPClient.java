@@ -32,8 +32,8 @@ public class UDPClient implements IUDPSocket {
         String receivedData = null;
         /* Создайте буфер для хранения получаемых данных. */
         byte[] receivingDataBuffer = new byte[1024];
-            /* Создайте экземпляр UDP-пакета для хранения клиентских данных с использованием буфера
-            для полученных данных */
+        /* Создайте экземпляр UDP-пакета для хранения клиентских данных с использованием буфера
+        для полученных данных */
         DatagramPacket receivingPacket = new DatagramPacket(receivingDataBuffer, receivingDataBuffer.length);
         // Получите данные от клиента и сохраните их в receivingPacket
         clientSocket.receive(receivingPacket);
