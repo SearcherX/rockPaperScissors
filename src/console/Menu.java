@@ -132,13 +132,13 @@ public class Menu {
                 System.out.println("===" + (i + 1) + "-ая игра===");
                 for (int j = 0; j < Match.ROUNDS_PER_GAME_COUNT; j++) {
                     System.out.println((j + 1) + "-ый раунд");
-                    Figure player1Choice;
-                    Figure player2Choice;
+                    Figure player1FigureChoice;
+                    Figure player2FigureChoice;
                     int choice2 = 0;
 
                     if (choice == 2) {
-                        player1Choice = getComputerChoice();
-                        System.out.println(player1 + " выбрал " + player1Choice);
+                        player1FigureChoice = getComputerChoice();
+                        System.out.println(player1 + " выбрал " + player1FigureChoice);
                         //задержка компьютера после хода
                         try {
                             Thread.sleep(1000);
@@ -151,10 +151,13 @@ public class Menu {
                             choice2 = in.nextInt();
 
                             if (choice2 == 0) {
-                                return true;
+                                if (choice == 3) {
+                                    socket.send(String.valueOf(choice2));
+                                    return true;
+                                }
                             } else if (choice2 >= 1 && choice2 <= 3) {
-                                player1Choice = intToFigure(choice2 - 1);
-                                System.out.println("Вы (" + player1 + ") выбрали " + player1Choice +
+                                player1FigureChoice = intToFigure(choice2 - 1);
+                                System.out.println("Вы (" + player1 + ") выбрали " + player1FigureChoice +
                                         ". Ожидаем ход оппонента");
                                 break;
                             } else
@@ -164,12 +167,17 @@ public class Menu {
 
                     if (choice == 3) {
                         socket.send(String.valueOf(choice2 - 1));
-                        player2Choice = intToFigure(Integer.parseInt(socket.receive()));
+                        int player2Choice = Integer.parseInt(socket.receive());
+                        player2FigureChoice = intToFigure(player2Choice);
+                        if (player2Choice == 0) {
+                            System.out.println("Оппонент " + player2 + " покинул игру");
+                            return true;
+                        }
                     } else
-                        player2Choice = getComputerChoice();
+                        player2FigureChoice = getComputerChoice();
 
-                    Round curRound = game.setRound(player1Choice, player2Choice);
-                    System.out.println("Оппонент " + player2 + " выбрал " + player2Choice);
+                    Round curRound = game.setRound(player1FigureChoice, player2FigureChoice);
+                    System.out.println("Оппонент " + player2 + " выбрал " + player2FigureChoice);
                     printWinner(player1, player2, curRound.getResult());
 
                 }
