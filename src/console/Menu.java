@@ -166,6 +166,7 @@ public class Menu {
                             } else if (choice2 == 5) {
                                 System.out.println("Вы (" + player1 + ") признали поражение");
                                 curRound.setResult(2);
+                                break;
                             } else
                                 System.out.println(choice2 + " не поддерживается");
                         }
