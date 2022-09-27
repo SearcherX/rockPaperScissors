@@ -114,7 +114,7 @@ public class Statistics {
         return sum;
     }
 
-    //преобразовать милисекунды в форматированное время
+    //преобразовать милисекунды в отформатированное время
     public String getTime(long millis) {
         return String.format("%02d:%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(millis),
@@ -144,7 +144,7 @@ public class Statistics {
         return mostPopularFigure;
     }
 
-    //метод нахождения самой популярной фигуры за матч
+    //метод нахождения самой непопулярной фигуры за матч
     public Figure getMostUnPopularFigure(Match match) {
         Figure mostUnPopularFigure = Figure.ROCK;
         int min = match.getGames().get(0).getFiguresCountMap().get(Figure.ROCK);

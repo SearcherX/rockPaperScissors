@@ -43,6 +43,7 @@ public class Game {
         }
     }
 
+    //получить время игры в миллисекундах
     public long getGameDuration() {
         if (stopTime == null)
             throw new RuntimeException("Игра ещё не закончена");

@@ -79,7 +79,7 @@ public class Menu {
 
                     if (choice2 == 0)
                         return true;
-                        //Создать UDP-сокет, к которому подключится оппонент
+                    //Создать UDP-сокет, к которому подключится оппонент
                     else if (choice2 == 1) {
                         UDPServer receiver = new UDPServer(PORT);
                         System.out.println("Ожидаем оппонента");
@@ -91,7 +91,7 @@ public class Menu {
                         receiver.send(nickname);
                         socket = receiver;
                         break;
-                        //Создать UDP-сокет, который подключится к ожидающему сокету
+                    //Создать UDP-сокет, который подключится к ожидающему сокету
                     } else if (choice2 == 2) {
                         System.out.print("Введите ip сервера:");
                         String ipStr = in.next();
@@ -136,7 +136,7 @@ public class Menu {
                 Game game = new Game();
                 match.getGames().add(game);
                 System.out.println("===" + (i + 1) + "-ая игра===");
-                //внутренни for следует по раундам
+                //внутренний for следует по раундам
                 for (int j = 0; j < Match.ROUNDS_PER_GAME_COUNT; j++) {
                     System.out.println((j + 1) + "-ый раунд");
                     Figure player1FigureChoice;
