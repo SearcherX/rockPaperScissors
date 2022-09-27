@@ -25,15 +25,6 @@ public class Game {
         return rounds;
     }
 
-    public ArrayList<Integer> getResult() {
-        ArrayList<Integer> res = new ArrayList<>();
-        for (Round round: rounds) {
-            res.add(round.getResult());
-        }
-
-        return res;
-    }
-
     public void stop() {
         stopTime = LocalDateTime.now();
         setFigureCountMap();
