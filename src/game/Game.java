@@ -45,12 +45,6 @@ public class Game {
 
     //метод подсчета количества выборов каждой фигуры
     public void setFigureCountMap() {
-        figuresCount = new HashMap<>() {{
-            put(Figure.ROCK, 0);
-            put(Figure.SCISSORS, 0);
-            put(Figure.PAPER, 0);
-        }};
-
         for (Round round: getRounds()) {
             for (Map.Entry<Figure, Integer> entry: round.getFigureCountMap().entrySet()) {
                 figuresCount.put(entry.getKey(), figuresCount.get(entry.getKey()) + entry.getValue());
